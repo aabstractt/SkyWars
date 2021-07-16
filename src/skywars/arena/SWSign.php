@@ -33,9 +33,9 @@ class SWSign extends Position{
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -68,7 +68,7 @@ class SWSign extends Position{
         $tile = $this->getTile();
 
         if (!$tile instanceof Sign) {
-            if ($arena === null) {
+            if ($arena !== null) {
                 SignFactory::getInstance()->assignNewSign($arena);
             }
 

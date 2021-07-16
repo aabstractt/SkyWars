@@ -79,7 +79,7 @@ class SignFactory {
         shuffle($signStorage);
 
         foreach ($signStorage as $sign) {
-            if ($sign->getId() == null || $sign->wasAssigned()) {
+            if ($sign->getId() === null || $sign->wasAssigned()) {
                 continue;
             }
 

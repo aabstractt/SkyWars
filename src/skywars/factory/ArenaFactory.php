@@ -40,19 +40,19 @@ class ArenaFactory {
      * @return SWArena
      */
     public function registerNewArena(SWSign $sign = null, SWMap $map = null): SWArena {
-        if ($sign == null) {
+        if ($sign === null) {
             $sign = SignFactory::getInstance()->getRandomSign();
         }
 
-        if ($sign == null) {
+        if ($sign === null || $sign->getId() === null) {
             throw new PluginException('SWSign was received null after get a random sign');
         }
 
-        if ($map == null) {
+        if ($map === null) {
             $map = MapFactory::getInstance()->getRandomMap();
         }
 
-        if ($map == null) {
+        if ($map === null) {
             throw new PluginException('SWMap was received null after get a random level');
         }
 
