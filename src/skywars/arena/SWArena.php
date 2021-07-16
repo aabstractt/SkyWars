@@ -230,6 +230,16 @@ class SWArena extends TaskHandlerStorage {
         $this->players[$player->getSlot()] = $player;
 
         $this->broadcastMessage($player->getName() . ' joined (' . count($this->players) . '/' . $this->map->getMaxSlots() . ')');
+
+        $this->getScoreboard()->addPlayer($player);
+
+        $this->getScoreboard()->setLines(SkyWars::translateScoreboard('waiting-scoreboard', [
+            'event_name' => 'Start',
+            'event_time' => -1,
+            'title' => count($this->players) > $this->map->getMinSlots() ? 'with' : 'without',
+            'players_count' => count($this->players),
+            'map' => $this->map->getMapName()
+        ]), $player);
     }
 
     /**

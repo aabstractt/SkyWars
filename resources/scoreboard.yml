@@ -1,4 +1,39 @@
-waiting-players-scoreboard:
-  3: ""
+# The following variables can be used on the scoreboard while waiting for players
+# $event_name - Next event (after start the event is "Start")
+# $event_time - Event time left
+# $players_count - Players left
+# $title - Line 5 text
+# $map - Map name
+waiting-scoreboard:
+  8: "Next Event:"
+  7: "&a$event_name $event_time"
+  6: ""
+  5: "$title"
+  4: ""
+  3: "Map: &a$map"
+  2: ""
+  1: "&emc.ethernight.icu"
+waiting-scoreboard-update:
+  7: "&a$event_name $event_time"
+  5: "$title"
+waiting-scoreboard-title:
+  without: "Waiting Players"
+  with: "Players left: $players_count"
+
+# The following variables can be used on the scoreboard while start the game
+# $event_name - Next event
+# $event_time - Event time left
+# $players_count - Players left
+# $kills - Player kills
+# $map - Map name
+match-scoreboard:
+  10: "Next Event:"
+  9: "&a$event_name $event_time"
+  8: ""
+  7: "Players Left: &a$players_count"
+  6: ""
+  5: "Kills: &a$kills"
+  4: ""
+  3: "Map: &a$map"
   2: ""
   1: "&emc.ethernight.icu"

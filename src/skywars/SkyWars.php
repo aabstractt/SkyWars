@@ -3,6 +3,7 @@
 namespace skywars;
 
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use skywars\command\SWCommand;
 use skywars\factory\ArenaFactory;
 use skywars\factory\MapFactory;
@@ -13,6 +14,8 @@ class SkyWars extends PluginBase {
 
     /** @var SkyWars */
     private static $instance;
+    /** @var array */
+    private $scoreboard = [];
 
     /**
      * @return SkyWars
@@ -24,13 +27,57 @@ class SkyWars extends PluginBase {
     public function onEnable() {
         self::$instance = $this;
 
+        $this->saveConfig();
+        $this->saveResource('scoreboard.yml');
+
         MapFactory::getInstance()->init();
         ArenaFactory::getInstance()->init();
+
+        $this->scoreboard = (new Config($this->getDataFolder() . 'scoreboard.yml'))->getAll();
 
         $this->getServer()->getCommandMap()->register(SWCommand::class, new SWCommand());
 
         $this->getServer()->getPluginManager()->registerEvents(new EntityLevelChangeListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerQuitListener(), $this);
+    }
+
+    /**
+     * @param string      $type
+     * @param array       $findAndReplace
+     * @param string|null $typeExtra
+     *
+     * @return array
+     */
+    public static function translateScoreboard(string $type, array $findAndReplace, string $typeExtra = null): array {
+        $firstType = $type;
+
+        if ($typeExtra != null) {
+            $type = $type . '-' . $typeExtra;
+        }
+
+        $scoreboard = self::$instance->scoreboard[$type] ?? [];
+
+        if (empty($scoreboard)) {
+            return [];
+        }
+
+        $replace = function (array $findAndReplace, string $text): string {
+            foreach ($findAndReplace as $search => $replace) {
+                $text = str_replace('$' . $search, $replace, $text);
+            }
+
+            return $text;
+        };
+
+        if (isset($findAndReplace['title'])) {
+            $findAndReplace['title'] = $replace($findAndReplace, self::$instance->scoreboard[$firstType . '-title'][$findAndReplace['title']] ?? '');
+        }
+
+        foreach ($scoreboard as $slot => $text) {
+            $scoreboard[$slot] = $replace($findAndReplace, $text);
+        }
+
+        return $scoreboard;
     }
 
     /**

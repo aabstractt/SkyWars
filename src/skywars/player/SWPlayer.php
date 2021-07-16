@@ -80,13 +80,6 @@ class SWPlayer {
     }
 
     /**
-     * @param int $slot
-     */
-    public function setSlot(int $slot): void {
-        $this->slot = $slot;
-    }
-
-    /**
      * @return int
      */
     public function getSlot(): int {
@@ -141,6 +134,9 @@ class SWPlayer {
         $instance->setFlying(false);
         $instance->setAllowFlight(false);
         $instance->setGamemode(Player::ADVENTURE);
+
+        $instance->setFood($instance->getMaxFood());
+        $instance->setHealth($instance->getMaxHealth());
     }
 
     public function matchAttributes(): void {
@@ -163,6 +159,8 @@ class SWPlayer {
         }
 
         $arena = $this->arena;
+
+        $arena->getScoreboard()->removePlayer($this);
 
         if ($arena->inArenaAsPlayer($instance)) {
             $arena->removePlayer($instance);

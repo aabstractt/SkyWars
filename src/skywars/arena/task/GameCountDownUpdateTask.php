@@ -6,6 +6,7 @@ namespace skywars\arena\task;
 
 use pocketmine\scheduler\Task;
 use skywars\arena\SWArena;
+use skywars\SkyWars;
 
 class GameCountDownUpdateTask extends Task {
 
@@ -53,6 +54,13 @@ class GameCountDownUpdateTask extends Task {
 
         $joined = count($arena->getPlayers());
 
+        $arena->getScoreboard()->setLines(SkyWars::translateScoreboard('waiting-scoreboard', [
+            'event_name' => 'Start',
+            'event_time' => $this->countdown,
+            'title' => $joined > $arena->getMap()->getMinSlots() ? 'with' : 'without',
+            'players_count' => $joined
+        ], 'update'));
+
         if ($joined >= $arena->getMap()->getMinSlots()) {
             if (in_array($this->countdown, [60, 50, 40, 30, 20, 15, 10]) || ($this->countdown > 0 && $this->countdown < 6)) {
                 $arena->broadcastMessage('Game is starting in ' . $this->countdown . ' second');
@@ -70,6 +78,8 @@ class GameCountDownUpdateTask extends Task {
                 $arena->setStatus(SWArena::STATUS_IN_GAME);
 
                 $this->cancel();
+
+                return;
             }
 
             $this->countdown--;
