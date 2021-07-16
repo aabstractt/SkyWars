@@ -23,7 +23,7 @@ class SignFactory {
     /** @noinspection PhpUnusedParameterInspection */
     public function init(): void {
         foreach ((new Config(SkyWars::getInstance()->getDataFolder() . 'sign.json'))->getAll() as $id => $data) {
-            $this->registerNewSign($data, $id);
+            $this->registerNewSign($data, (int)$id);
         }
 
         SkyWars::getInstance()->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (int $currentTick): void {

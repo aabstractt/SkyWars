@@ -15,7 +15,7 @@ use skywars\SkyWars;
 
 class SWSign extends Position{
 
-    /** @var int */
+    /** @var int|null */
     private $id;
     /** @var SWArena|null */
     private $arena = null;
@@ -56,7 +56,7 @@ class SWSign extends Position{
     /**
      * @param SWArena|null $arena
      */
-    public function assignArena(SWArena $arena = null): void {
+    public function assignArena(?SWArena $arena = null): void {
         $this->arena = $arena;
 
         $this->handleUpdate();
@@ -90,6 +90,7 @@ class SWSign extends Position{
 
         $serialized = $config->getAll();
 
+        /** @var array<string, mixed> $serialized */
         $serialized[] = $data;
 
         $config->setAll($serialized);
@@ -97,7 +98,7 @@ class SWSign extends Position{
 
         foreach ($serialized as $id => $data) {
             if ($data['x'] == $this->getFloorX() && $data['y'] == $this->getFloorY() && $data['z'] == $this->getFloorZ()) {
-                $this->id = $id;
+                $this->id = (int) $id;
 
                 return;
             }
