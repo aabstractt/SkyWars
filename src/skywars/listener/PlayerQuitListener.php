@@ -7,6 +7,7 @@ namespace skywars\listener;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;
 use skywars\factory\ArenaFactory;
+use skywars\factory\SignFactory;
 
 class PlayerQuitListener implements Listener {
 
@@ -17,6 +18,8 @@ class PlayerQuitListener implements Listener {
      */
     public function onPlayerQuitEvent(PlayerQuitEvent $ev): void {
         $player = $ev->getPlayer();
+
+        SignFactory::getInstance()->signRegister = array_diff(SignFactory::getInstance()->signRegister, [$player->getName()]);
 
         $arena = ArenaFactory::getInstance()->getPlayerArena($player);
 

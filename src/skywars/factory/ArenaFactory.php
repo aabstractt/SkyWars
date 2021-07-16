@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace skywars\factory;
 
+use pocketmine\Server;
 use skywars\arena\SWArena;
 use skywars\arena\SWMap;
+use skywars\arena\SWSign;
+use skywars\asyncio\FileDeleteAsyncTask;
 use skywars\InstancePluginReference;
 use pocketmine\Player;
 use pocketmine\plugin\PluginException;
@@ -21,15 +24,30 @@ class ArenaFactory {
     private $gamesPlayed = 1;
 
     public function init(): void {
+        $matches = glob(Server::getInstance()->getDataPath() . 'worlds/SW-*', GLOB_ONLYDIR);
 
+        if ($matches !== false) {
+            foreach ($matches as $match) {
+                FileDeleteAsyncTask::recurse_delete($match);
+            }
+        }
     }
 
     /**
-     * @param SWMap|null $map
+     * @param SWSign|null $sign
+     * @param SWMap|null  $map
      *
      * @return SWArena
      */
-    public function registerNewArena(SWMap $map = null): SWArena {
+    public function registerNewArena(SWSign $sign = null, SWMap $map = null): SWArena {
+        if ($sign == null) {
+            $sign = SignFactory::getInstance()->getRandomSign();
+        }
+
+        if ($sign == null) {
+            throw new PluginException('SWSign was received null after get a random sign');
+        }
+
         if ($map == null) {
             $map = MapFactory::getInstance()->getRandomMap();
         }
@@ -38,9 +56,12 @@ class ArenaFactory {
             throw new PluginException('SWMap was received null after get a random level');
         }
 
-        $id = $this->gamesPlayed++;
+        $arena = new SWArena($this->gamesPlayed++, $map);
 
-        return $this->arenas[$id] = new SWArena($id, $map);
+        $sign->assignArena($arena);
+        $arena->signId = $sign->getId();
+
+        return $this->arenas[$arena->getId()] = $arena;
     }
 
     /**

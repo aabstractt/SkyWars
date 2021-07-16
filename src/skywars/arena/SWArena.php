@@ -32,6 +32,8 @@ class SWArena extends TaskHandlerStorage {
     private $worldName;
     /** @var int */
     private $status = self::STATUS_WAITING;
+    /** @var int */
+    public $signId = -1;
     /** @var array<int, Player> */
     private $playersQueued = [];
     /** @var array<int, SWPlayer> */
@@ -148,6 +150,21 @@ class SWArena extends TaskHandlerStorage {
      */
     public function getStatus(): int {
         return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusColor(): string {
+        if ($this->status == self::STATUS_IN_GAME) {
+            return TextFormat::RED . 'In-Game';
+        } else if ($this->isFull()) {
+            return TextFormat::DARK_PURPLE . 'Full';
+        } else if ($this->status == self::STATUS_STARTING) {
+            return TextFormat::YELLOW . 'Starting';
+        }
+
+        return TextFormat::GREEN . 'Waiting';
     }
 
     /**

@@ -6,6 +6,7 @@ namespace skywars\command;
 
 use skywars\command\subcommand\CreateCommand;
 use skywars\command\subcommand\JoinCommand;
+use skywars\command\subcommand\SignCommand;
 use skywars\command\subcommand\SpawnCommand;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -26,6 +27,7 @@ class SWCommand extends Command {
         $this->addCommand(
             new CreateCommand('create', 'create'),
             new SpawnCommand('spawn', 'spawn'),
+            new SignCommand('sign', 'sign'),
             new JoinCommand('join')
         );
 

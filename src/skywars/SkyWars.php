@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace skywars;
 
 use pocketmine\plugin\PluginBase;
@@ -7,8 +9,10 @@ use pocketmine\utils\Config;
 use skywars\command\SWCommand;
 use skywars\factory\ArenaFactory;
 use skywars\factory\MapFactory;
+use skywars\factory\SignFactory;
 use skywars\listener\EntityLevelChangeListener;
 use skywars\listener\PlayerQuitListener;
+use skywars\listener\BlockBreakListener;
 
 class SkyWars extends PluginBase {
 
@@ -32,12 +36,14 @@ class SkyWars extends PluginBase {
 
         MapFactory::getInstance()->init();
         ArenaFactory::getInstance()->init();
+        SignFactory::getInstance()->init();
 
         $this->scoreboard = (new Config($this->getDataFolder() . 'scoreboard.yml'))->getAll();
 
         $this->getServer()->getCommandMap()->register(SWCommand::class, new SWCommand());
 
         $this->getServer()->getPluginManager()->registerEvents(new EntityLevelChangeListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new BlockBreakListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerQuitListener(), $this);
     }
 
