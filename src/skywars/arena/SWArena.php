@@ -68,7 +68,7 @@ class SWArena extends TaskHandlerStorage {
             TextFormat::YELLOW . TextFormat::BOLD . strtoupper(SkyWars::getInstance()->getName()),
             Scoreboard::SIDEBAR);
 
-        $this->scheduleRepeatingTask(GameCountDownUpdateTask::TASK_NAME, new GameCountDownUpdateTask($this));
+        $this->scheduleRepeatingTask(new GameCountDownUpdateTask($this));
 
         Server::getInstance()->getAsyncPool()->submitTask(new FileCopyAsyncTask(
             $this->plugin->getDataFolder() . 'arenas/' . $map->getMapName(),

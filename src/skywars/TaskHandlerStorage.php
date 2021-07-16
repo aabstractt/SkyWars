@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace skywars;
 
 use pocketmine\scheduler\Task;
+use ReflectionClass;
 
 abstract class TaskHandlerStorage {
 
@@ -12,28 +13,35 @@ abstract class TaskHandlerStorage {
     private $taskStorage = [];
 
     /**
-     * @param string $taskName
-     * @param Task   $task
-     * @param int    $ticks
+     * @param Task $task
+     * @param int  $ticks
      */
-    public function scheduleRepeatingTask(string $taskName, Task $task, int $ticks = 20): void {
-        $this->taskStorage[$taskName] = $task->getTaskId();
-
+    public function scheduleRepeatingTask(Task $task, int $ticks = 20): void {
         SkyWars::getInstance()->getScheduler()->scheduleRepeatingTask($task, $ticks);
+
+        $class = new ReflectionClass($task);
+
+        $this->taskStorage[strtolower($class->getShortName())] = $task->getTaskId();
     }
 
     /**
-     * @param string $taskName
+     * @param string $className
      */
-    public function cancelTask(string $taskName): void {
-        $taskId = $this->taskStorage[$taskName] ?? null;
+    public function cancelTask(string $className): void {
+        try {
+            $class = new ReflectionClass($className);
 
-        if ($taskId == null) {
-            return;
+            $taskId = $this->taskStorage[strtolower($class->getShortName())] ?? null;
+
+            if ($taskId == null) {
+                return;
+            }
+
+            SkyWars::getInstance()->getScheduler()->cancelTask($taskId);
+
+            unset($this->taskStorage[strtolower($class->getShortName())]);
+        } catch (\ReflectionException $e) {
+            SkyWars::getInstance()->getLogger()->logException($e);
         }
-
-        SkyWars::getInstance()->getScheduler()->cancelTask($taskId);
-
-        unset($this->taskStorage[$taskName]);
     }
 }
