@@ -46,7 +46,7 @@ class SignFactory {
 
         $sign->assignArena(ArenaFactory::getInstance()->registerNewArena($sign));
 
-        $this->signStorage[$sign->getId()] = $sign;
+        $this->signStorage[$sign->getIdNonNull()] = $sign;
     }
 
     /**
@@ -65,7 +65,7 @@ class SignFactory {
 
         $sign->assignArena($arena);
 
-        $arena->signId = $sign->getId();
+        $arena->signId = $sign->getIdNonNull();
 
         return true;
     }

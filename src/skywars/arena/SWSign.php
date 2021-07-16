@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace skywars\arena;
 
 use pocketmine\level\Position;
+use pocketmine\plugin\PluginException;
 use pocketmine\Server;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
@@ -37,6 +38,16 @@ class SWSign extends Position{
      */
     public function getId(): ?int {
         return $this->id;
+    }
+
+    public function getIdNonNull(): int {
+        $id = $this->id;
+
+        if ($id === null) {
+            throw new PluginException('SWSign id is null');
+        }
+
+        return $id;
     }
 
     /**

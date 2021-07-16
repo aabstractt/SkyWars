@@ -44,7 +44,7 @@ class ArenaFactory {
             $sign = SignFactory::getInstance()->getRandomSign();
         }
 
-        if ($sign === null || $sign->getId() === null) {
+        if ($sign === null) {
             throw new PluginException('SWSign was received null after get a random sign');
         }
 
@@ -59,7 +59,7 @@ class ArenaFactory {
         $arena = new SWArena($this->gamesPlayed++, $map);
 
         $sign->assignArena($arena);
-        $arena->signId = $sign->getId();
+        $arena->signId = $sign->getIdNonNull();
 
         return $this->arenas[$arena->getId()] = $arena;
     }
