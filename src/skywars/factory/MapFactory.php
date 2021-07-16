@@ -13,7 +13,7 @@ class MapFactory {
 
     use InstancePluginReference;
 
-    /** @var array<int, SWMap> */
+    /** @var array<string, SWMap> */
     private $mapStorage = [];
 
     public function init(): void {

@@ -12,7 +12,7 @@ use pocketmine\utils\Config;
 
 class SWMap {
 
-    /** @var int */
+    /** @var string */
     private $mapName;
     /** @var array */
     private $data;

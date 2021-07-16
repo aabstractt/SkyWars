@@ -166,7 +166,7 @@ class SWArena extends TaskHandlerStorage {
 
         $slot = array_values($slots)[$key] ?? -1;
 
-        if ($slots != -1) {
+        if ($slot != -1) {
             unset($slots[$key]);
 
             $this->slots = $slots;
