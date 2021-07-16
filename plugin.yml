@@ -1,0 +1,5 @@
+name: SkyWars
+main: skywars\SkyWars
+version: 1.0
+author: iTheTrollIdk
+api: 3.0.0
