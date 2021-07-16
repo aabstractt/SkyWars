@@ -18,7 +18,7 @@ class MapFactory {
 
     public function init(): void {
         foreach ((new Config(SkyWars::getInstance()->getDataFolder() . 'maps.json'))->getAll() as $mapName => $data) {
-            $this->registerNewMap($mapName, $data);
+            $this->registerNewMap((string) $mapName, $data);
         }
 
         Server::getInstance()->getLogger()->info(TextFormat::AQUA . 'SkyWars: ' . count($this->mapStorage) . ' map(s) loaded.');

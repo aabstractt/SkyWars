@@ -17,7 +17,25 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+      - name: Create Vendor Directory
+        run: |
+          echo Making directory...
+          mkdir vendor
+          echo Directory made.
+      # Checkout pmmp/PocketMine-MP
+      - name: wget PocketMine-MP
+        uses: wei/wget@v1
+        with:
+          args: -O vendor/PocketMine-MP.phar https://github.com/pmmp/PocketMine-MP/releases/latest/download/PocketMine-MP.phar
+      # Checkout https://github.com/Muqsit/InvMenu
+      - name: Checkout InvMenu
+        uses: actions/checkout@v2
+        with:
+          repository: Muqsit/InvMenu
+          ref: master
+          path: vendor/InvMenu
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Run PHPStan
-        uses: nxtlvlsoftware/pmmp-phpstan-action@3
+        uses: larryTheCoder/pmmp-phpstan-action@master
         with:
           phpstan-config: phpstan.neon.dist
