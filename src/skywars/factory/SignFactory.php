@@ -50,18 +50,28 @@ class SignFactory {
     }
 
     /**
-     * @param SWArena $arena
+     * @param int $id
+     *
+     * @return SWSign|null
+     */
+    public function getSignRegistered(int $id): ?SWSign {
+        return $this->signStorage[$id] ?? null;
+    }
+
+    /**
+     * @param SWArena     $arena
+     * @param SWSign|null $sign
      *
      * @return bool
      */
-    public function assignNewSign(SWArena $arena): bool {
-        $sign = $this->getRandomSign();
+    public function assignNewSign(SWArena $arena, SWSign $sign = null): bool {
+        if ($sign === null) {
+            $sign = $this->getRandomSign();
+        }
 
         if ($sign == null) {
             return false;
         }
-
-        // TODO: Assign a new sign to the arena
 
         $sign->assignArena($arena);
 

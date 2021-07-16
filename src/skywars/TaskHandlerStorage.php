@@ -6,6 +6,7 @@ namespace skywars;
 
 use pocketmine\scheduler\Task;
 use ReflectionClass;
+use ReflectionException;
 
 abstract class TaskHandlerStorage {
 
@@ -40,7 +41,7 @@ abstract class TaskHandlerStorage {
             SkyWars::getInstance()->getScheduler()->cancelTask($taskId);
 
             unset($this->taskStorage[strtolower($class->getShortName())]);
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             SkyWars::getInstance()->getLogger()->logException($e);
         }
     }

@@ -415,6 +415,10 @@ class SWArena extends TaskHandlerStorage {
         }
     }
 
+    public function forceClose(): void {
+
+    }
+
     /**
      * @return SkyWars
      */

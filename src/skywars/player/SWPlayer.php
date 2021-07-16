@@ -140,7 +140,25 @@ class SWPlayer {
     }
 
     public function matchAttributes(): void {
+        $instance = $this->getInstance();
 
+        if ($instance === null) {
+            return;
+        }
+
+        $instance->getInventory()->clearAll();
+        $instance->getArmorInventory()->clearAll();
+        $instance->getCursorInventory()->clearAll();
+
+        $instance->removeAllEffects();
+        $instance->removeTitles();
+
+        $instance->setFlying(false);
+        $instance->setAllowFlight(false);
+        $instance->setGamemode(Player::SURVIVAL);
+
+        $instance->setFood($instance->getMaxFood());
+        $instance->setHealth($instance->getMaxHealth());
     }
 
     public function spectatorAttributes(): void {

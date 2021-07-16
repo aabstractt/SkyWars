@@ -15,9 +15,9 @@ class GameCountDownUpdateTask extends Task {
     /** @var SWArena */
     private $arena;
     /** @var int */
-    private $initialCountdown = 60;
+    private $initialCountdown = 10;
     /** @var int */
-    private $countdown = 60;
+    private $countdown = 10;
 
     /**
      * GameUpdateTask constructor.
@@ -75,9 +75,14 @@ class GameCountDownUpdateTask extends Task {
                     $player->matchAttributes();
                 }
 
+                $arena->getScoreboard()->removePlayer();
+                $arena->getScoreboard()->addPlayer();
+
                 $arena->setStatus(SWArena::STATUS_IN_GAME);
 
                 $this->cancel();
+
+                $arena->scheduleRepeatingTask(new GameMatchUpdateTask($arena));
 
                 return;
             }
@@ -92,9 +97,7 @@ class GameCountDownUpdateTask extends Task {
         }
     }
 
-    protected function cancel(): void {
-        if (($handler = $this->getHandler()) != null) {
-            $handler->cancel();
-        }
+    private function cancel(): void {
+        $this->arena->cancelTask(self::class);
     }
 }

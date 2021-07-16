@@ -11,6 +11,7 @@ use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
+use skywars\factory\ArenaFactory;
 use skywars\factory\SignFactory;
 use skywars\SkyWars;
 
@@ -20,6 +21,8 @@ class SWSign extends Position{
     private $id;
     /** @var SWArena|null */
     private $arena = null;
+    /** @var int */
+    private $tickWaiting = 0;
 
     /**
      * SWSign constructor.
@@ -86,11 +89,23 @@ class SWSign extends Position{
             return;
         }
 
-        if ($arena === null) {
-            $tile->setText(TextFormat::DARK_PURPLE . '-------------', TextFormat::BLUE . 'SEARCHING', TextFormat::BLUE . 'FOR GAMES', TextFormat::DARK_PURPLE . '-------------');
-        } else {
+        if ($arena !== null) {
             $tile->setText(TextFormat::BLACK . TextFormat::BOLD . 'SkyWars', $arena->getStatusColor(), $arena->getMap()->getMapName(), count($arena->getPlayers()) . '/' . $arena->getMap()->getMaxSlots());
+
+            return;
         }
+
+        if ($this->tickWaiting > 5) {
+            ArenaFactory::getInstance()->registerNewArena($this);
+
+            $this->tickWaiting = 0;
+
+            return;
+        }
+
+        $tile->setText(TextFormat::DARK_PURPLE . '-------------', TextFormat::BLUE . 'SEARCHING', TextFormat::BLUE . 'FOR GAMES', TextFormat::DARK_PURPLE . '-------------');
+
+        $this->tickWaiting++;
     }
 
     /**
