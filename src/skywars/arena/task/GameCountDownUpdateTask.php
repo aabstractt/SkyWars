@@ -6,6 +6,7 @@ namespace skywars\arena\task;
 
 use pocketmine\scheduler\Task;
 use skywars\arena\SWArena;
+use skywars\event\arena\ArenaStartEvent;
 use skywars\SkyWars;
 
 class GameCountDownUpdateTask extends Task {
@@ -81,6 +82,8 @@ class GameCountDownUpdateTask extends Task {
                 $arena->setStatus(SWArena::STATUS_IN_GAME);
 
                 $this->cancel();
+
+                (new ArenaStartEvent($arena))->call();
 
                 $arena->scheduleRepeatingTask(new GameMatchUpdateTask($arena));
 

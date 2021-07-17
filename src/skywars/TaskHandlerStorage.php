@@ -10,15 +10,21 @@ use ReflectionException;
 
 abstract class TaskHandlerStorage {
 
+    /** @var SkyWars */
+    protected $plugin;
     /** @var array<string, int> */
     private $taskStorage = [];
+
+    public function __construct() {
+        $this->plugin = SkyWars::getInstance();
+    }
 
     /**
      * @param Task $task
      * @param int  $ticks
      */
     public function scheduleRepeatingTask(Task $task, int $ticks = 20): void {
-        SkyWars::getInstance()->getScheduler()->scheduleRepeatingTask($task, $ticks);
+        $this->plugin->getScheduler()->scheduleRepeatingTask($task, $ticks);
 
         $class = new ReflectionClass($task);
 
@@ -44,11 +50,11 @@ abstract class TaskHandlerStorage {
                 return;
             }
 
-            SkyWars::getInstance()->getScheduler()->cancelTask($taskId);
+            $this->plugin->getScheduler()->cancelTask($taskId);
 
             unset($this->taskStorage[strtolower($class->getShortName())]);
         } catch (ReflectionException $e) {
-            SkyWars::getInstance()->getLogger()->logException($e);
+            $this->plugin->getLogger()->logException($e);
         }
     }
 }

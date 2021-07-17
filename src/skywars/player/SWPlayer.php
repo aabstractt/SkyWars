@@ -10,6 +10,7 @@ use skywars\arena\SWArena;
 use pocketmine\Player;
 use pocketmine\plugin\PluginException;
 use pocketmine\Server;
+use skywars\event\player\PlayerJoinArenaEvent;
 
 class SWPlayer {
 
@@ -87,6 +88,13 @@ class SWPlayer {
     }
 
     /**
+     * @return bool
+     */
+    public function isConnected(): bool {
+        return $this->getInstance() != null;
+    }
+
+    /**
      * @param Level|null $level
      * @return bool
      */
@@ -117,7 +125,11 @@ class SWPlayer {
         $this->slot = $slot;
 
         try {
-            $instance->teleport($this->arena->getMap()->getSpawnLocation($slot, $this->arena->getWorldNonNull()));
+            $spawnLocation = $this->arena->getMap()->getSpawnLocation($slot, $this->arena->getWorldNonNull());
+
+            (new PlayerJoinArenaEvent($this, $spawnLocation))->call();
+
+            $instance->teleport($spawnLocation);
         } catch (PluginException $e) {
             $instance->sendMessage($e->getMessage());
 

@@ -44,8 +44,6 @@ class SWArena extends TaskHandlerStorage {
     private $scoreboard;
     /** @var array */
     private $slots;
-    /** @var SkyWars */
-    private $plugin;
 
     /**
      * SWArena constructor.
@@ -54,6 +52,8 @@ class SWArena extends TaskHandlerStorage {
      * @param SWMap $map
      */
     public function __construct(int $id, SWMap $map) {
+        parent::__construct();
+
         $this->id = $id;
 
         $this->map = $map;
@@ -61,8 +61,6 @@ class SWArena extends TaskHandlerStorage {
         $this->worldName = 'SW-' . $map->getMapName() . '(' . $id . ')';
 
         $this->slots = $map->getSlotsRegistered();
-
-        $this->plugin = SkyWars::getInstance();
 
         $this->scoreboard = new Scoreboard($this,
             TextFormat::YELLOW . TextFormat::BOLD . strtoupper(SkyWars::getInstance()->getName()),
@@ -76,7 +74,7 @@ class SWArena extends TaskHandlerStorage {
             function () {
                 Server::getInstance()->loadLevel($this->worldName);
 
-                $level = Server::getInstance()->getLevelByName($this->worldName);
+                $level = $this->getWorld();
 
                 if ($level == null) {
                     return;
