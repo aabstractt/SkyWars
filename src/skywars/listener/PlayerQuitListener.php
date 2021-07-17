@@ -8,6 +8,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;
 use skywars\factory\ArenaFactory;
 use skywars\factory\SignFactory;
+use skywars\SkyWars;
 
 class PlayerQuitListener implements Listener {
 
@@ -21,12 +22,12 @@ class PlayerQuitListener implements Listener {
 
         SignFactory::getInstance()->signRegister = array_diff(SignFactory::getInstance()->signRegister, [$player->getName()]);
 
-        $arena = ArenaFactory::getInstance()->getPlayerArena($player);
+        $player = ArenaFactory::getInstance()->getPlayer($player);
 
-        if ($arena == null) {
+        if ($player == null) {
             return;
         }
 
-        $arena->removePlayer($player, false);
+        SkyWars::handlePlayerDeath($player, null);
     }
 }

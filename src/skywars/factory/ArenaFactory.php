@@ -12,6 +12,7 @@ use skywars\asyncio\FileDeleteAsyncTask;
 use skywars\InstancePluginReference;
 use pocketmine\Player;
 use pocketmine\plugin\PluginException;
+use skywars\player\SWPlayer;
 use skywars\SkyWars;
 
 class ArenaFactory {
@@ -129,5 +130,14 @@ class ArenaFactory {
         }
 
         return null;
+    }
+
+    /**
+     * @param Player $player
+     *
+     * @return SWPlayer|null
+     */
+    public function getPlayer(Player $player): ?SWPlayer {
+        return ($arena = $this->getPlayerArena($player)) !== null ? $arena->getPlayer($player) : null;
     }
 }

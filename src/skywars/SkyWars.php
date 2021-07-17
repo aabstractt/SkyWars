@@ -13,6 +13,7 @@ use skywars\factory\SignFactory;
 use skywars\listener\EntityLevelChangeListener;
 use skywars\listener\PlayerQuitListener;
 use skywars\listener\BlockBreakListener;
+use skywars\player\SWPlayer;
 
 class SkyWars extends PluginBase {
 
@@ -45,6 +46,22 @@ class SkyWars extends PluginBase {
         $this->getServer()->getPluginManager()->registerEvents(new EntityLevelChangeListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new BlockBreakListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerQuitListener(), $this);
+    }
+
+    /**
+     * @param SWPlayer      $deathPlayer
+     * @param SWPlayer|null $killerPlayer
+     * @param int           $cause
+     */
+    public static function handlePlayerDeath(SWPlayer $deathPlayer, ?SWPlayer $killerPlayer, int $cause = -1): void {
+        $arena = $deathPlayer->getArena();
+
+        if ($cause === -1) {
+            $arena->removePlayer($deathPlayer->getInstanceNonNull());
+        } else {
+            // TODO: Add player to spectators (Before adding it to the spectators, it will try to remove it from the players)
+            $arena->addSpectator($deathPlayer);
+        }
     }
 
     /**

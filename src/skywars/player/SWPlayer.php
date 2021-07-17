@@ -149,6 +149,8 @@ class SWPlayer {
 
         $instance->setFood($instance->getMaxFood());
         $instance->setHealth($instance->getMaxHealth());
+
+        $instance->canCollide = false;
     }
 
     public function matchAttributes(): void {
@@ -171,10 +173,40 @@ class SWPlayer {
 
         $instance->setFood($instance->getMaxFood());
         $instance->setHealth($instance->getMaxHealth());
+
+        $instance->canCollide = true;
     }
 
     public function spectatorAttributes(): void {
+        $instance = $this->getInstance();
 
+        if ($instance === null) {
+            return;
+        }
+
+        $instance->getInventory()->clearAll();
+        $instance->getArmorInventory()->clearAll();
+        $instance->getCursorInventory()->clearAll();
+
+        $instance->removeAllEffects();
+        $instance->removeTitles();
+
+        $instance->setFlying(false);
+        $instance->setAllowFlight(false);
+        $instance->setGamemode(Player::ADVENTURE);
+
+        $instance->setFood($instance->getMaxFood());
+        $instance->setHealth($instance->getMaxHealth());
+
+        $instance->canCollide = false;
+
+        $spawnLocation = $this->arena->getWorldNonNull()->getSpawnLocation();
+
+        if ($this->slot !== -1) {
+            $spawnLocation = $this->arena->getMap()->getSpawnLocation($this->slot, $this->arena->getWorldNonNull());
+        }
+
+        $instance->teleport($spawnLocation);
     }
 
     public function defaultAttributes(): void {

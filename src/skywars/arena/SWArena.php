@@ -318,6 +318,8 @@ class SWArena extends TaskHandlerStorage {
      * @param SWPlayer $player
      */
     public function addSpectator(SWPlayer $player): void {
+        $this->removePlayer($player->getInstanceNonNull(), false);
+
         $player->spectatorAttributes();
 
         $this->spectators[$player->getSlot()] = $player;
