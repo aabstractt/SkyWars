@@ -27,10 +27,16 @@ abstract class TaskHandlerStorage {
 
     /**
      * @param string $className
+     *
+     * @phpstan-param class-string<Task> $className
      */
     public function cancelTask(string $className): void {
         try {
             $class = new ReflectionClass($className);
+
+            if (is_a($className, Task::class, true) && !$class->isAbstract()) {
+                return;
+            }
 
             $taskId = $this->taskStorage[strtolower($class->getShortName())] ?? null;
 

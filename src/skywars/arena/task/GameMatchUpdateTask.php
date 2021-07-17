@@ -61,6 +61,6 @@ class GameMatchUpdateTask extends Task {
     }
 
     private function cancel(): void {
-        $this->arena->cancelTask(get_class($this));
+        $this->arena->cancelTask(self::class);
     }
 }
