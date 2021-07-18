@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace skywars\command;
 
-use skywars\command\subcommand\CreateCommand;
-use skywars\command\subcommand\JoinCommand;
-use skywars\command\subcommand\SignCommand;
-use skywars\command\subcommand\SpawnCommand;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\utils\TextFormat;
+use skywars\command\subcommand\CreateCommand;
+use skywars\command\subcommand\JoinCommand;
+use skywars\command\subcommand\SignCommand;
+use skywars\command\subcommand\SpawnCommand;
 
 class SWCommand extends Command {
 

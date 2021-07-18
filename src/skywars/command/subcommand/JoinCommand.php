@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace skywars\command\subcommand;
 
-use skywars\factory\ArenaFactory;
-use skywars\command\SubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use skywars\command\SubCommand;
+use skywars\factory\ArenaFactory;
 
 class JoinCommand extends SubCommand {
 

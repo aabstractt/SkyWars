@@ -3,11 +3,11 @@
 namespace skywars\factory;
 
 use pocketmine\Server;
+use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use skywars\arena\SWMap;
-use skywars\SkyWars;
 use skywars\InstancePluginReference;
-use pocketmine\utils\Config;
+use skywars\SkyWars;
 
 class MapFactory {
 
@@ -46,16 +46,6 @@ class MapFactory {
      */
     public function getMapRegistered(string $mapName): ?SWMap {
         return $this->mapStorage[strtolower($mapName)] ?? null;
-    }
-
-    public function serialize(): void {
-        $config = new Config(SkyWars::getInstance()->getDataFolder() . 'maps.json');
-
-        foreach ($this->mapStorage as $map) {
-            $config->set($map->getMapName(), $map->dataSerialized());
-        }
-
-        $config->save();
     }
 
     public function getRandomMap(): ?SWMap {

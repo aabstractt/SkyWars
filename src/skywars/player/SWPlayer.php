@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace skywars\player;
 
 use pocketmine\level\Level;
-use pocketmine\utils\TextFormat;
-use skywars\arena\SWArena;
 use pocketmine\Player;
 use pocketmine\plugin\PluginException;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
+use skywars\arena\SWArena;
 use skywars\event\player\PlayerJoinArenaEvent;
 
 class SWPlayer {

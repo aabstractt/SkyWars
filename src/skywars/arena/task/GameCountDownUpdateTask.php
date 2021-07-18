@@ -11,8 +11,6 @@ use skywars\SkyWars;
 
 class GameCountDownUpdateTask extends Task {
 
-    public const TASK_NAME = 'count_down_task';
-
     /** @var SWArena */
     private $arena;
     /** @var int */

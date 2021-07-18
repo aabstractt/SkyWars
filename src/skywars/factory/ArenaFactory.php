@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace skywars\factory;
 
+use pocketmine\Player;
+use pocketmine\plugin\PluginException;
 use pocketmine\Server;
 use skywars\arena\SWArena;
 use skywars\arena\SWMap;
 use skywars\arena\SWSign;
 use skywars\asyncio\FileDeleteAsyncTask;
 use skywars\InstancePluginReference;
-use pocketmine\Player;
-use pocketmine\plugin\PluginException;
 use skywars\player\SWPlayer;
 use skywars\SkyWars;
 

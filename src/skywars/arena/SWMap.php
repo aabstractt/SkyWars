@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace skywars\arena;
 
 use pocketmine\level\Level;
-use pocketmine\plugin\PluginException;
-use skywars\SkyWars;
 use pocketmine\level\Location;
+use pocketmine\plugin\PluginException;
 use pocketmine\utils\Config;
+use skywars\SkyWars;
 
 class SWMap {
 

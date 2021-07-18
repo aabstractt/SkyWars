@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace skywars\command\subcommand;
 
-use skywars\command\SubCommand;
-use skywars\factory\MapFactory;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use skywars\command\SubCommand;
+use skywars\factory\MapFactory;
 
 class SpawnCommand extends SubCommand {
 

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace skywars\command\subcommand;
 
-use skywars\asyncio\FileCopyAsyncTask;
-use skywars\SkyWars;
-use skywars\command\SubCommand;
-use skywars\factory\MapFactory;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use skywars\asyncio\FileCopyAsyncTask;
+use skywars\command\SubCommand;
+use skywars\factory\MapFactory;
+use skywars\SkyWars;
 
 class CreateCommand extends SubCommand {
 

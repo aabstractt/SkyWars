@@ -10,9 +10,9 @@ use skywars\command\SWCommand;
 use skywars\factory\ArenaFactory;
 use skywars\factory\MapFactory;
 use skywars\factory\SignFactory;
+use skywars\listener\BlockBreakListener;
 use skywars\listener\EntityLevelChangeListener;
 use skywars\listener\PlayerQuitListener;
-use skywars\listener\BlockBreakListener;
 use skywars\player\SWPlayer;
 
 class SkyWars extends PluginBase {

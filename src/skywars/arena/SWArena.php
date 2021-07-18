@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace skywars\arena;
 
+use pocketmine\level\Level;
 use pocketmine\level\Level as pocketLevel;
+use pocketmine\level\LevelException;
+use pocketmine\Player;
+use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use skywars\arena\api\Scoreboard;
 use skywars\arena\task\GameCountDownUpdateTask;
 use skywars\asyncio\FileCopyAsyncTask;
-use skywars\SkyWars;
 use skywars\player\SWPlayer;
-use pocketmine\level\Level;
-use pocketmine\level\LevelException;
-use pocketmine\Player;
-use pocketmine\Server;
+use skywars\SkyWars;
 use skywars\TaskHandlerStorage;
 
 class SWArena extends TaskHandlerStorage {
@@ -327,18 +327,15 @@ class SWArena extends TaskHandlerStorage {
 
     /**
      * @param Player $player
-     * @param bool   $defaultAttributes
      */
-    public function removeSpectator(Player $player, bool $defaultAttributes = true): void {
+    public function removeSpectator(Player $player): void {
         $player = $this->getSpectator($player);
 
         if ($player == null) {
             return;
         }
 
-        if ($defaultAttributes) {
-            $player->defaultAttributes();
-        }
+        $player->defaultAttributes();
 
         unset($this->spectators[$player->getSlot()]);
     }
@@ -417,12 +414,5 @@ class SWArena extends TaskHandlerStorage {
 
     public function forceClose(): void {
 
-    }
-
-    /**
-     * @return SkyWars
-     */
-    protected function getPlugin(): SkyWars {
-        return $this->plugin;
     }
 }
