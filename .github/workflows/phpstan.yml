@@ -38,4 +38,4 @@ jobs:
       - name: Run PHPStan
         uses: larryTheCoder/pmmp-phpstan-action@master
         with:
-          phpstan-config: phpstan.neon
+          phpstan-config: phpstan.neon.dist
