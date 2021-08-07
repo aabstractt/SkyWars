@@ -1,4 +1,12 @@
 parameters:
-    level: 8
+    level: max
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - 'Class Threaded not found.'
+
     paths:
-        - src
+        - /src/
+    scanDirectories:
+        - /src/
