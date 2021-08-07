@@ -144,7 +144,7 @@ class Scoreboard {
             $entry->scoreboardId = $line;
 
             if ($type === SetScorePacket::TYPE_CHANGE) {
-                if ($message === '' || $message == "") {
+                if ($message == "") {
                     $message = str_repeat(' ', $line - 1);
                 }
 

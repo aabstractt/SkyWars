@@ -15,6 +15,9 @@ abstract class TaskHandlerStorage {
     /** @var array<string, int> */
     private $taskStorage = [];
 
+    /**
+     * TaskHandlerStorage constructor.
+     */
     public function __construct() {
         $this->plugin = SkyWars::getInstance();
     }

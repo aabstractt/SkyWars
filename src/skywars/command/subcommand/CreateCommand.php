@@ -6,6 +6,7 @@ namespace skywars\command\subcommand;
 
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
+use pocketmine\item\ItemIds;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
@@ -64,7 +65,7 @@ class CreateCommand extends SubCommand {
             $sender->sendMessage(TextFormat::GREEN . 'Successfully created ' . $mapName);
 
             $sender->getInventory()->clearAll();
-            $sender->getInventory()->setItem(0, (Item::get(Item::WOODEN_PICKAXE))->setCustomName(TextFormat::RESET . TextFormat::GREEN . 'Area spawn'));
+            $sender->getInventory()->setItem(0, (Item::get(ItemIds::WOODEN_PICKAXE))->setCustomName(TextFormat::RESET . TextFormat::GREEN . 'Area spawn'));
         }));
     }
 }

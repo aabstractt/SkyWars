@@ -14,7 +14,7 @@ class SWMap {
 
     /** @var string */
     private $mapName;
-    /** @var array */
+    /** @var array{minSlots: int, maxSlots: int, spawns: array} */
     private $data;
 
     /**
